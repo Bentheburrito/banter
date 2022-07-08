@@ -21,6 +21,8 @@ defmodule BanterWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/posts", PostLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
@@ -78,6 +80,12 @@ defmodule BanterWeb.Router do
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+
+    live "/posts/new", PostLive.Index, :new
+    live "/posts/:id/edit", PostLive.Index, :edit
+
+    live "/posts/:id", PostLive.Show, :show
+    live "/posts/:id/show/edit", PostLive.Show, :edit
   end
 
   scope "/", BanterWeb do

@@ -1,0 +1,48 @@
+<h1>Listing Posts</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.post_index_path(@socket, :index)}>
+    <.live_component
+      module={BanterWeb.PostLive.FormComponent}
+      id={@post.id || :new}
+      title={@page_title}
+      action={@live_action}
+      post={@post}
+      current_user={@current_user}
+      return_to={Routes.post_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Title</th>
+      <th>Body</th>
+      <th>Up votes</th>
+      <th>Down votes</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="posts">
+    <%= for post <- @posts do %>
+      <tr id={"post-#{post.id}"}>
+        <td><%= post.user.email %></td>
+        <td><%= post.title %></td>
+        <td><%= post.body %></td>
+        <td><%= post.up_votes %></td>
+        <td><%= post.down_votes %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.post_show_path(@socket, :show, post) %></span>
+          <span><%= live_patch "Edit", to: Routes.post_index_path(@socket, :edit, post) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: post.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></span>
