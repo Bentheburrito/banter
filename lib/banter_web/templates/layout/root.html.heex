@@ -13,18 +13,19 @@
     <header>
       <section class="container">
         <nav>
-          <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
-            <% end %>
-          </ul>
+          <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+            <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+          <% end %>
           <%= render "_user_menu.html", assigns %>
         </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
+        <a href="/" class="logo">
+          <img src={Routes.static_path(@conn, "/images/logo.png")} alt="Banter Logo"/>
         </a>
       </section>
+      <nav class="content-nav">
+        <% selected_class = @conn.request_path == Routes.post_index_path(@conn, :index) && "button-primary--selected" || "" %>
+        <%= link "Explore Posts", to: Routes.post_index_path(@conn, :index), class: "button-primary #{selected_class}" %>
+      </nav>
     </header>
     <%= @inner_content %>
   </body>

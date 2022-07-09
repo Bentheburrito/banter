@@ -24,6 +24,6 @@ defmodule Banter.Timeline.Post do
     |> cast(attrs, [:body, :down_votes, :title, :up_votes, :user_id])
     |> validate_required([:body, :title, :user_id])
     |> validate_length(:title, min: 2, max: 255)
-    |> validate_length(:body, min: 50, max: 4000)
+    |> validate_length(:body, min: 280, max: 4000)
   end
 end

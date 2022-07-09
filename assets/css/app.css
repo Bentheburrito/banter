@@ -150,6 +150,13 @@
   }
 }
 
+/* VARIABLES */
+:root {
+  --primary-color: #0680bd
+}
+
+/* POSTS */
+
 .post {
   margin: 2%;
   padding: 2%;
@@ -180,3 +187,72 @@
   display: flex;
   justify-content: space-between;
 }
+
+/* MAIN/GENERAL STYLES */
+
+.page-header {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo img {
+  max-height: 200px;
+}
+
+.title-card {
+  background-color: lightgray;
+  text-align: center;
+}
+
+.sub-title-card {
+  text-align: center;
+}
+
+
+.content-nav {
+  display: flex;
+  justify-content: center;
+}
+
+/* LINKS */
+
+a {
+  color: var(--primary-color);
+}
+
+.button-primary {
+  font-size: large;
+  color: white;
+  text-align: right;
+  margin: 4px;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background-color: var(--primary-color);
+  filter: brightness(100%)
+}
+
+.button-primary:hover {
+  filter: brightness(120%);
+  color: lightgray;
+}
+
+.button-primary:active {
+  background-color: var(--primary-color);
+  filter: brightness(90%);
+}
+
+.button-primary--selected {
+  filter: invert();
+}
+
+/* .button-primary--selected:hover {
+  background-color: magenta;
+}
+
+.button-primary--selected:active {
+  background-color: purple;
+} */
