@@ -152,7 +152,8 @@
 
 /* VARIABLES */
 :root {
-  --primary-color: #0680bd
+  --primary-color: #0680bd;
+  --secondary-color: #f97f42;
 }
 
 /* POSTS */
@@ -173,6 +174,10 @@
   font-weight: bold;
 }
 
+.post-title--input {
+  font-size: large;
+}
+
 .post-username {
   font-style: italic;
   text-align: right;
@@ -180,7 +185,15 @@
 
 .post-body {
   white-space: pre-wrap;
-  font-family: 'Courier New', Courier, monospace
+  font-family: 'Courier New', Courier, monospace;
+  resize: vertical;
+}
+
+.post-body--minimized {
+  max-height: 40vh;
+  overflow: hidden;
+  /* this sadly doesn't work without setting `white-space: nowrap` in `.post-body` above */
+  text-overflow: ellipsis;
 }
 
 .post-actions {
@@ -218,6 +231,10 @@
   justify-content: center;
 }
 
+.text-center {
+  text-align: center;
+}
+
 /* LINKS */
 
 a {
@@ -246,7 +263,7 @@ a {
 }
 
 .button-primary--selected {
-  filter: invert();
+  border: 1px solid var(--secondary-color);
 }
 
 /* .button-primary--selected:hover {

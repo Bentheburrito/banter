@@ -14,24 +14,30 @@
   </.modal>
 <% end %>
 
+<section class="text-center">
+  <span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new), class: "button-primary" %></span>
+</section>
 
-  <section id="posts">
-    <%= for post <- @posts do %>
-      <article id={"post-#{post.id}"} class="post">
-        <div class="post-header">
-          <h3 class="post-title"><%= post.title %></h3>
-          <div class="post-username"><%= post.user.username %></div>
-        </div>
+<section id="posts">
+  <%= for post <- @posts do %>
+    <article id={"post-#{post.id}"} class="post">
+      <div class="post-header">
+        <h3 class="post-title"><%= post.title %></h3>
+        <div class="post-username"><%= post.user.username %></div>
+      </div>
+
+      <div class="post-body--minimized" onclick="expandCollapsePostBody">
         <p class="post-body"><%= post.body %></p>
+      </div>
 
-        <div class="post-actions">
-          <span><%= post.up_votes %> + | - <%= post.down_votes %></span>
-          <span><%= live_redirect "Show", to: Routes.post_show_path(@socket, :show, post) %></span>
-          <span><%= live_patch "Edit", to: Routes.post_index_path(@socket, :edit, post) %></span>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: post.id, data: [confirm: "Are you sure?"] %></span>
-        </div>
-      </article>
-    <% end %>
-  </section>
+      <div class="post-actions">
+        <span><%= post.up_votes %> + | - <%= post.down_votes %></span>
+        <span><%= live_redirect "Show", to: Routes.post_show_path(@socket, :show, post) %></span>
+        <span><%= live_patch "Edit", to: Routes.post_index_path(@socket, :edit, post) %></span>
+        <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: post.id, data: [confirm: "Are you sure?"] %></span>
+      </div>
+    </article>
+  <% end %>
+</section>
 
-<span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></span>
+  <script type="module" src="/assets/client.js"></script>

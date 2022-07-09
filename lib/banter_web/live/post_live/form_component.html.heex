@@ -10,11 +10,11 @@
     phx-submit="save">
   
     <%= label f, :title %>
-    <%= text_input f, :title %>
+    <%= text_input f, :title, class: "post-title post-title--input" %>
     <%= error_tag f, :title %>
   
     <%= label f, :body %>
-    <%= textarea f, :body %>
+    <%= textarea f, :body, phx_hook: "MaintainAttrs", data_attrs: "style", class: "post-body" %>
     <%= error_tag f, :body %>
 
     <%= hidden_input f, :user_id, value: @current_user.id %>
