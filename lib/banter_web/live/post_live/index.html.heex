@@ -14,35 +14,24 @@
   </.modal>
 <% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>User</th>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Up votes</th>
-      <th>Down votes</th>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="posts">
+  <section id="posts">
     <%= for post <- @posts do %>
-      <tr id={"post-#{post.id}"}>
-        <td><%= post.user.email %></td>
-        <td><%= post.title %></td>
-        <td><%= post.body %></td>
-        <td><%= post.up_votes %></td>
-        <td><%= post.down_votes %></td>
+      <article id={"post-#{post.id}"} class="post">
+        <div class="post-header">
+          <h3 class="post-title"><%= post.title %></h3>
+          <div class="post-username"><%= post.user.username %></div>
+        </div>
+        <p class="post-body"><%= post.body %></p>
 
-        <td>
+        <div class="post-actions">
+          <span><%= post.up_votes %> + | - <%= post.down_votes %></span>
           <span><%= live_redirect "Show", to: Routes.post_show_path(@socket, :show, post) %></span>
           <span><%= live_patch "Edit", to: Routes.post_index_path(@socket, :edit, post) %></span>
           <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: post.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
-      </tr>
+        </div>
+      </article>
     <% end %>
-  </tbody>
-</table>
+  </section>
 
 <span><%= live_patch "New Post", to: Routes.post_index_path(@socket, :new) %></span>

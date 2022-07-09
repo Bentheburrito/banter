@@ -20,6 +20,7 @@ defmodule Banter.Timeline do
   def list_posts do
     Post
     |> preload(:user)
+    |> order_by([p], desc: p.inserted_at)
     |> Repo.all()
   end
 
