@@ -26,18 +26,19 @@
         <div class="post-username"><%= post.user.username %></div>
       </div>
 
-      <div class="post-body--minimized" onclick="expandCollapsePostBody">
+      <div class="post-body-container post-body--minimized" id={"post-#{post.id}-body-container"}>
         <p class="post-body"><%= post.body %></p>
+      </div>
+      <div class="text-center">
+        <img class="post-body-status" id={"post-#{post.id}-body-status"} phx-hook="ExpandCollapse" src="/images/down_arrow.png">
       </div>
 
       <div class="post-actions">
         <span><%= post.up_votes %> + | - <%= post.down_votes %></span>
-        <span><%= live_redirect "Show", to: Routes.post_show_path(@socket, :show, post) %></span>
+        <span><%= live_redirect "Open", to: Routes.post_show_path(@socket, :show, post) %></span>
         <span><%= live_patch "Edit", to: Routes.post_index_path(@socket, :edit, post) %></span>
         <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: post.id, data: [confirm: "Are you sure?"] %></span>
       </div>
     </article>
   <% end %>
 </section>
-
-  <script type="module" src="/assets/client.js"></script>

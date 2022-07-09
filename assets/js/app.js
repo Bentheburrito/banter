@@ -35,6 +35,22 @@ Hooks.MaintainAttrs = {
   updated () { this.prevAttrs.forEach(([name, val]) => this.el.setAttribute(name, val)) }
 }
 
+Hooks.ExpandCollapse = {
+  mounted () {
+    let postBodyContainerId = this.el.id.replace("status", "container");
+    let postBodyContainer = document.querySelector(`#${postBodyContainerId}`);
+
+    // If the post body has overflow, add an onClick event listener to toggle expanding/collapsing the post body.
+    if (postBodyContainer.scrollHeight > postBodyContainer.clientHeight) {
+      this.el.addEventListener("click", () => expandCollapsePostBody(this.el, postBodyContainer));
+      setPostBodyStatus(this.el, "/images/down_arrow.png")
+    } else {
+      // Otherwise, remove this element (the expand/collapse button/arrow image)
+      this.el.remove();
+    }
+  }
+}
+
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken }, hooks: Hooks })
@@ -52,3 +68,30 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+//// CLIENT-SIDE FUNCTIONS ////
+
+// Expand or collapse a post's content on the main posts page
+function expandCollapsePostBody (statusImg, postBodyContainer) {
+
+  let classes = postBodyContainer.getAttribute("class").split(" ");
+
+  if (classes.includes("post-body--minimized")) {
+    postBodyContainer.setAttribute("class", classes.filter(c => c != "post-body--minimized").join(" "));
+    setPostBodyStatus(statusImg, "/images/up_arrow.png");
+  } else {
+    classes.push("post-body--minimized");
+    postBodyContainer.setAttribute("class", classes.join(" "));
+    setPostBodyStatus(statusImg, "/images/down_arrow.png");
+  }
+}
+
+function setPostBodyStatus (postStatusImage, statusImg) {
+  postStatusImage.setAttribute("src", statusImg);
+}
+
+// This for loop and the above expandCollapsePostBody fn were in client.js, but with liveview when opening a post
+// the event listener would disappear, so had to add a phx-hook to assign the event listener on mount instead.
+// for (let postBody of document.querySelectorAll(".post-body-container")) {
+//   this.addEventListener("click", expandCollapsePostBody);
+// }

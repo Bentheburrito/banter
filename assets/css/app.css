@@ -196,6 +196,17 @@
   text-overflow: ellipsis;
 }
 
+.post-body-status {
+  max-width: 3vw;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.post-body-status:hover {
+  cursor: pointer;
+}
+
 .post-actions {
   display: flex;
   justify-content: space-between;
